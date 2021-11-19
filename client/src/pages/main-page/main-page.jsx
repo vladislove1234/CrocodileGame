@@ -14,11 +14,9 @@ const MainPage = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    
     connection.invoke('Connect', input);
-
     dispatch(ActionCreator.setName(input));
-    dispatch(ActionCreator.setJustLogged(true));
-    dispatch(ActionCreator.toggleRules());
   };
 
   return (

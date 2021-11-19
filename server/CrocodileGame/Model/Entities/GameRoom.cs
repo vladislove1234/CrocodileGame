@@ -23,6 +23,7 @@ namespace CrocodileGame.Model.Entities
             Name = name;
             Users = new List<User>();
             Presenter = null;
+            Messages = new List<Message>();
         }
         public List<Command> ConnectUser(string connectionId, string name)
         {
@@ -45,13 +46,13 @@ namespace CrocodileGame.Model.Entities
             {
                 commands.Add(new Command("Connected", "player", user));
             }
-            int count = Messages.Count - 1, start = 0;
+            /* int count = Messages.Count - 1, start = 0;
             if(Messages.Count > 100)
             {
                 start = Messages.Count - 1 - 100;
                 count = 100;
-            }
-            commands.Add(new Command("Messages", Messages.GetRange(start,count), user));
+            } */
+            commands.Add(new Command("Messages", Messages, user));
             commands.Add(new Command("Players", Users, user));
             return commands;
         }

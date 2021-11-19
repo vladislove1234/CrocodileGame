@@ -3,6 +3,8 @@ import {
   MESSAGE_SEND,
   MESSAGE_SET_RIGHT,
   MESSAGE_INIT_CONNECTION,
+  MESSAGE_NEW_MESSAGE,
+  MESSAGE_SET_MESSAGES,
 } from '../types';
 
 const initialState = {
@@ -10,20 +12,6 @@ const initialState = {
   connection: null,
   messages: [],
 };
-
-// {
-//   id: `1`,
-//   type: `system`,
-//   isRight: undefined,
-//   text: `Віталій Кличко покинув(-ла) гру`,
-// }, {
-//   id: `2`,
-//   user: `Tester`,
-//   date: new Date(),
-//   isRight: undefined,
-//   text: `Test Message`,
-//   color: `#fa8`,
-// }
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -33,21 +21,17 @@ export default (state = initialState, action) => {
       connection: action.payload,
     };
 
-
-  case MESSAGE_SEND:
-    const {user, text, type, color} = action.payload;
-
+  case MESSAGE_SET_MESSAGES:
     return {
       ...state,
-      messages: [
-        ...state.messages,
-        {
-          user, text, type, color,
-          date: new Date(),
-          id: +(new Date()) + text,
-        },
-      ],
+      messages: action.payload,
     };
+
+  case MESSAGE_SEND:
+    const text = action.payload;
+    state.connection.invoke(`SendMessage`, text);
+
+    return state;
 
   case MESSAGE_SELECT:
     const id = action.payload;

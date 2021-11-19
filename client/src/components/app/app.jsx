@@ -1,6 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
+
+import {
+  HubConnectionBuilder,
+  HttpTransportType,
+  LogLevel,
+} from '@microsoft/signalr';
 
 
 import 'normalize.css';
@@ -11,7 +17,6 @@ import {ActionCreator} from '../../redux/action-creator';
 
 const App = () => {
   // wait until we check is user logined
-  const [ready, setReady] = useState(false);
 
   const isAuth = useSelector(({user}) => user.isAuth);
   const dispatch = useDispatch();
@@ -19,7 +24,6 @@ const App = () => {
   const router = useRoutes(isAuth);
 
   useEffect(async () => {
-    const username = localStorage.getItem(`name`);
     const connection = new HubConnectionBuilder()
       .configureLogging(LogLevel.Debug)
       .withUrl(`https://localhost:5050/chat`, {
@@ -28,25 +32,14 @@ const App = () => {
       })
       .build();
 
-    dispatch(ActionCreator.initConnection(connection));
-
-    if (username) {
-      connection.invoke('Connect', username);
-      dispatch(ActionCreator.setName(username));
-    }
-
-    setReady(true);
+    dispatch(ActionCreator.initMessages(connection));
   }, []);
 
-  if (ready) {
-    return (
-      <Router>
-        {router}
-      </Router>
-    );
-  }
-
-  return <div />;
+  return (
+    <Router>
+      {router}
+    </Router>
+  );
 };
 
 export default App;

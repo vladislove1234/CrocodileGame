@@ -61,8 +61,8 @@ const ChatPage = () => {
         </section>
 
         {
-          type === `user` ?
-            <ChatInput name={name} color={color} /> :
+          type === `player` ?
+            <ChatInput /> :
             <ChatButtons />
         }
       </div>

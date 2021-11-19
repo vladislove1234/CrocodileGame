@@ -4,6 +4,11 @@ import PropTypes from 'prop-types';
 import './info-line.scss';
 import UserAvatar from '../user-avatar/user-avatar';
 
+const userTypeToRole = {
+  'presenter': `Крокодил`,
+  'player': `Користувач`,
+};
+
 const InfoLine = ({name, type, color, logout}) => {
   return (
     <section className="info">
@@ -16,7 +21,7 @@ const InfoLine = ({name, type, color, logout}) => {
 
         <div className="info__user-data">
           <p className="info__user-name">{name}</p>
-          <p className="info__user-type">{type}</p>
+          <p className="info__user-type">{userTypeToRole[type]}</p>
         </div>
       </div>
 
@@ -32,7 +37,7 @@ InfoLine.propTypes = {
   color: PropTypes.string,
   name: PropTypes.string.isRequired,
   logout: PropTypes.func.isRequired,
-  type: PropTypes.oneOf([`user`, `leader`]).isRequired,
+  type: PropTypes.oneOf([`player`, `presenter`]).isRequired,
 };
 
 export default InfoLine;

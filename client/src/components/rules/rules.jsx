@@ -9,6 +9,7 @@ const Rules = ({type}) => {
   const dispatch = useDispatch();
 
   const show = useSelector(({game}) => game.showRules);
+  const word = useSelector(({game}) => game.word);
   const justLogged = useSelector(({game}) => game.justLogged);
 
 
@@ -23,7 +24,7 @@ const Rules = ({type}) => {
 
   const className= `rules__wrapper ${!show && `rules__wrapper--hide`}`;
 
-  if (type === `user`) {
+  if (type === `player`) {
     return (
       <section className={className}>
         <div className="rules">
@@ -59,7 +60,7 @@ const Rules = ({type}) => {
           <span className="rules__text--bold"> крокодил</span>.
           <br />
           Ваше слово:
-          <span className="rules__text--bold"> автомобіль</span>.
+          <span className="rules__text--bold"> {word}</span>.
         </p>
 
         <p className="rules__text">
@@ -83,7 +84,7 @@ const Rules = ({type}) => {
 
 Rules.propTypes = {
   show: PropTypes.bool,
-  type: PropTypes.oneOf([`user`, `leader`]),
+  type: PropTypes.oneOf([`player`, `presenter`]),
 };
 
 export default Rules;
