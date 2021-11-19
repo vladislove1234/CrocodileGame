@@ -38,15 +38,16 @@ namespace CrocodileGame.Model.Entities
             {
                 Presenter = user;
                 SetNewWord();
-                commands.Add(new Command("Connected", "presenter", Users.ToArray()));
+                commands.Add(new Command("Connected", "presenter", user));
                 commands.Add(new Command("Word", CurrentWord, user));
             }
             else
             {
-                commands.Add(new Command("Connected", "player", Users.ToArray()));
+                commands.Add(new Command("Connected", "player", user));
             }
             commands.Add(new Command("Messages", Messages, user));
             commands.Add(new Command("Player", user, user));
+            commands.Add(new Command("ConnectedPlayer", user , Users.ToArray()));
             return commands;
         }
         public List<Command> PorcessMessage(string text, string connectionId)
