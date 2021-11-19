@@ -47,7 +47,7 @@ namespace CrocodileGame.Model.Entities
             }
             commands.Add(new Command("Messages", Messages, user));
             commands.Add(new Command("Player", user, user));
-            commands.Add(new Command("ConnectedPlayer", user , Users.ToArray()));
+            commands.Add(new Command("ConnectedPlayer", user.Name , Users.ToArray()));
             return commands;
         }
         public List<Command> PorcessMessage(string text, string connectionId)
@@ -64,11 +64,11 @@ namespace CrocodileGame.Model.Entities
             commands.Add(new Command("NewMessage", message, Users.ToArray()));
             if (message.Text.Equals(CurrentWord))
             {
+                commands.Add(new Command("Win", new Win(sender.Name, CurrentWord), Users.ToArray()));
                 SetNewWord();
                 var presenter = sender;
-                commands.Add(new Command("NewPresenter", Presenter, Users.ToArray()));
-                commands.Add(new Command("NewWord", CurrentWord, sender));
-
+                commands.Add(new Command("NewPresenter", Presenter.Name, Users.ToArray()));
+                commands.Add(new Command("NewWord", CurrentWord, Presenter));
             }
             return commands;
         }
@@ -86,6 +86,7 @@ namespace CrocodileGame.Model.Entities
                 var presenter = Users[random.Next(0, Users.Count)];
                 if (presenter == Presenter)
                     Presenter = Users[0];
+                Presenter = presenter;
             }
             else
                 Presenter = null;
@@ -98,12 +99,12 @@ namespace CrocodileGame.Model.Entities
                 return null;
             var commands = new List<Command>();
             Users.Remove(user);
-            commands.Add(new Command("Disconnected", user, Users.ToArray()));
+            commands.Add(new Command("Disconnected", user.Name, Users.ToArray()));
             if (user == Presenter)
             {
                 SetRandomPresenter();
                 SetNewWord();
-                commands.Add(new Command("NewPresenter", Presenter, Users.ToArray()));
+                commands.Add(new Command("NewPresenter", Presenter.Name, Users.ToArray()));
                 commands.Add(new Command("NewWord", CurrentWord, user));
             }
             return commands;
