@@ -52,6 +52,11 @@ export default (state = initialState, action) => {
         ...state,
         type: `presenter`,
       };
+    } else if (state.type === `presenter`) {
+      return {
+        ...state,
+        type: `player`,
+      };
     }
 
     return state;

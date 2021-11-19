@@ -69,7 +69,7 @@ namespace CrocodileGame.Model.Entities
             {
                 commands.Add(new Command("Win", new Win(sender.Name, CurrentWord), Users.ToArray()));
                 SetNewWord();
-                var presenter = sender;
+                Presenter = sender;
                 commands.Add(new Command("NewPresenter", Presenter.Name, Users.ToArray()));
                 commands.Add(new Command("NewWord", CurrentWord, Presenter));
             }

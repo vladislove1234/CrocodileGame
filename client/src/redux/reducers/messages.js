@@ -7,6 +7,7 @@ import {
   MESSAGE_SET_MESSAGES,
   MESSAGE_DISCONNECT,
   MESSAGE_ADD_SYSTEM_MESSAGE,
+  MESSAGE_UPDATE_MESSAGE,
 } from '../types';
 
 const initialState = {
@@ -50,7 +51,7 @@ export default (state = initialState, action) => {
 
     state.connection.invoke(`AnswerMessage`, selectedMessage, answer);
     return state;
-  
+
   case MESSAGE_NEW_MESSAGE:
     return {
       ...state,
@@ -70,6 +71,20 @@ export default (state = initialState, action) => {
         messageType: `system`,
       }],
     };
+
+  case MESSAGE_UPDATE_MESSAGE: {
+    const updatedMessage = action.payload;
+    const {id} = updatedMessage;
+
+    const newMessages = state.messages.map((message) => {
+      return message.id === id ? updatedMessage : message;
+    });
+
+    return {
+      ...state,
+      messages: newMessages,
+    };
+  }
   }
 
   return state;

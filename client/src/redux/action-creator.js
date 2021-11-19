@@ -11,6 +11,7 @@ import {
   MESSAGE_INIT_CONNECTION,
   MESSAGE_ADD_SYSTEM_MESSAGE,
   MESSAGE_SET_MESSAGES,
+  MESSAGE_UPDATE_MESSAGE,
   MESSAGE_DISCONNECT,
   GAME_TOGGLE_RULES,
   GAME_SET_WORD,
@@ -110,6 +111,11 @@ const messageActions = {
       dispatch(gameActions.setWord(word));
     });
 
+    connection.on(`UpdateMessage`, (message) => {
+      console.log(`UpdateMessage`, message);
+      dispatch(messageActions.updateMessage(message));
+    });
+
     await connection.start();
 
     dispatch({
@@ -150,6 +156,11 @@ const messageActions = {
 
   disconnectMessages: () => ({
     type: MESSAGE_DISCONNECT,
+  }),
+
+  updateMessage: (message) => ({
+    type: MESSAGE_UPDATE_MESSAGE,
+    payload: message,
   }),
 };
 
