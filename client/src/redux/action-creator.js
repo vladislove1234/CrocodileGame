@@ -1,3 +1,4 @@
+import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 import {
   USER_LOGIN,
   USER_LOGOUT,
@@ -8,6 +9,7 @@ import {
   MESSAGE_SET_RIGHT,
   MESSAGE_NEW_MESSAGE,
   MESSAGE_INIT_CONNECTION,
+  MESSAGE_ADD_SYSTEM_MESSAGE,
   MESSAGE_SET_MESSAGES,
   MESSAGE_DISCONNECT,
   GAME_TOGGLE_RULES,
@@ -71,6 +73,31 @@ const messageActions = {
       dispatch(messageActions.newMessage(message));
     });
 
+    connection.on(`ConnectedPlayer`, (player) => {
+      console.log(`ConnectedPlayer`, player);
+      dispatch(
+        messageActions.addSystemMessage(`${player.name} приєднався(-лася)`),
+      );
+    });
+
+    connection.on(`NewPresenter`, (presenter) => {
+      console.log(`NewPresenter`, presenter);
+      dispatch(
+        messageActions.addSystemMessage(
+          `${presenter.name} став новим крокодилом`,
+        ),
+      );
+    });
+
+    connection.on(`Disconnected`, (person) => {
+      console.log(`Disconnected`, person);
+      dispatch(
+        messageActions.addSystemMessage(
+          `${person.name} покинув(-ла) гру`,
+        ),
+      );
+    });
+
     await connection.start();
 
     dispatch({
@@ -81,6 +108,11 @@ const messageActions = {
 
   sendMessage: (text) => ({
     type: MESSAGE_SEND,
+    payload: text,
+  }),
+
+  addSystemMessage: (text) => ({
+    type: MESSAGE_ADD_SYSTEM_MESSAGE,
     payload: text,
   }),
 

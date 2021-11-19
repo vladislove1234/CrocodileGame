@@ -24,15 +24,15 @@ namespace CrocodileGame.Hubs
             if (command != null)
                 await SendCommands(command);
         }
-        public async Task Disconnect(string name)
+        public async Task Disconnect()
         {
+            _logger.LogInformation(Context.ConnectionId);
             var commands = await _gameManager.Disconnect(Context.ConnectionId);
             if(commands != null)
             await SendCommands(commands);
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            _logger.LogWarning(exception.Message);
             var commands = await _gameManager.Disconnect(Context.ConnectionId);
             if (commands != null)
                 await SendCommands(commands);

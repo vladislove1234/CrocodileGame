@@ -31,8 +31,8 @@ const ChatList = () => {
             text="Нам не вдалося знайти нових повідомлень"
           /> :
           messages.map((message, i) => {
-            const senderName = message?.sender.name;
-            const lastFromUser = senderName !== messages?.[i + 1]?.sender.name;
+            const senderName = message?.sender?.name;
+            const lastFromUser = senderName !== messages?.[i + 1]?.sender?.name;
 
             return <Message
               fromMe={senderName === name}

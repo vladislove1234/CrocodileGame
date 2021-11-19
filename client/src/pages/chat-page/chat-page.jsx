@@ -22,10 +22,6 @@ const ChatPage = () => {
 
   const dispatch = useDispatch();
   const logout = () => {
-    dispatch(ActionCreator.sendMessage({
-      type: `system`,
-      text: `${name} покинув(-ла) гру`,
-    }));
     dispatch(ActionCreator.disconnectMessages());
     dispatch(ActionCreator.logout());
   };
