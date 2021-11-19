@@ -46,7 +46,9 @@ namespace CrocodileGame.Hubs
         }
         public async Task AnswerMessage(int messageId,string answer)
         {
-            var commands = _gameManager.AnswerMessage(messageId, answer, Context.ConnectionId);
+            var commands = await _gameManager.AnswerMessage(messageId, answer, Context.ConnectionId);
+            if (commands != null)
+                await SendCommand(commands);
         }
         public async Task SendCommand(Command command)
         {
