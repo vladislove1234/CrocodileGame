@@ -105,7 +105,9 @@ namespace CrocodileGame.Model.Entities
             if (user == Presenter)
             {
                 SetRandomPresenter();
+                SetNewWord();
                 commands.Add(new Command("NewPresenter", Presenter, Users.ToArray()));
+                commands.Add(new Command("NewWord", CurrentWord, user));
             }
             return commands;
         }
