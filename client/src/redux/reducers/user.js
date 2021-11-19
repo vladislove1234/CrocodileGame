@@ -3,6 +3,7 @@ import {
   USER_LOGOUT,
   USER_SET_NAME,
   USER_SET_COLOR,
+  USER_NEW_PRESENTER,
 } from '../types';
 
 const initialState = {
@@ -42,6 +43,18 @@ export default (state = initialState, action) => {
       ...state,
       color: action.payload,
     };
+
+  case USER_NEW_PRESENTER:
+    const newPresenter = action.payload;
+
+    if (newPresenter === state.name) {
+      return {
+        ...state,
+        type: `presenter`,
+      };
+    }
+
+    return state;
   }
 
   return state;

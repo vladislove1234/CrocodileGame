@@ -1,9 +1,9 @@
-import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 import {
   USER_LOGIN,
   USER_LOGOUT,
   USER_SET_NAME,
   USER_SET_COLOR,
+  USER_NEW_PRESENTER,
   MESSAGE_SEND,
   MESSAGE_SELECT,
   MESSAGE_SET_RIGHT,
@@ -36,6 +36,11 @@ const userActions = {
 
   logout: () => ({
     type: USER_LOGOUT,
+  }),
+
+  newPresenter: (person) => ({
+    type: USER_NEW_PRESENTER,
+    payload: person,
   }),
 };
 
@@ -73,18 +78,20 @@ const messageActions = {
       dispatch(messageActions.newMessage(message));
     });
 
-    connection.on(`ConnectedPlayer`, (player) => {
-      console.log(`ConnectedPlayer`, player);
+    connection.on(`ConnectedPlayer`, (playerName) => {
+      console.log(`ConnectedPlayer`, playerName);
       dispatch(
-        messageActions.addSystemMessage(`${player.name} приєднався(-лася)`),
+        messageActions.addSystemMessage(`${playerName} приєднався(-лася)`),
       );
     });
 
-    connection.on(`NewPresenter`, (presenter) => {
-      console.log(`NewPresenter`, presenter);
+    connection.on(`NewPresenter`, (presenterName) => {
+      console.log(`NewPresenter`, presenterName);
+
+      dispatch(userActions.newPresenter(presenterName));
       dispatch(
         messageActions.addSystemMessage(
-          `${presenter.name} став новим крокодилом`,
+          `${presenterName} став новим крокодилом`,
         ),
       );
     });
@@ -96,6 +103,11 @@ const messageActions = {
           `${person.name} покинув(-ла) гру`,
         ),
       );
+    });
+
+    connection.on(`NewWord`, (word) => {
+      console.log(`NewWord`, word);
+      dispatch(gameActions.setWord(word));
     });
 
     await connection.start();

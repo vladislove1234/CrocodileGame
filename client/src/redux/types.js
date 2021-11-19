@@ -2,6 +2,7 @@ export const USER_LOGIN = `USER/LOGIN`;
 export const USER_LOGOUT = `USER/LOGOUT`;
 export const USER_SET_NAME = `USER/SET_NAME`;
 export const USER_SET_COLOR = `USER/SET_COLOR`;
+export const USER_NEW_PRESENTER = `USER/NEW_PRESENTER`;
 
 export const MESSAGE_SEND = `MESSAGE/SEND`;
 export const MESSAGE_SELECT = `MESSAGE/SELECT`;

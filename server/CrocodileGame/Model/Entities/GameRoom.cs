@@ -89,6 +89,8 @@ namespace CrocodileGame.Model.Entities
                 var presenter = Users[random.Next(0, Users.Count)];
                 if (presenter == Presenter)
                     Presenter = Users[0];
+                else
+                    Presenter = presenter;
             }
             else
                 Presenter = null;
@@ -107,7 +109,7 @@ namespace CrocodileGame.Model.Entities
                 SetRandomPresenter();
                 SetNewWord();
                 commands.Add(new Command("NewPresenter", Presenter, Users.ToArray()));
-                commands.Add(new Command("NewWord", CurrentWord, user));
+                commands.Add(new Command("NewWord", CurrentWord, Presenter));
             }
             return commands;
         }
