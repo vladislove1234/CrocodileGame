@@ -100,7 +100,7 @@ const messageActions = {
       console.log(`Disconnected`, person);
       dispatch(
         messageActions.addSystemMessage(
-          `${person.name} покинув(-ла) гру`,
+          `${person} покинув(-ла) гру`,
         ),
       );
     });

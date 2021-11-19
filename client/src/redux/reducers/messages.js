@@ -44,20 +44,12 @@ export default (state = initialState, action) => {
     };
 
   case MESSAGE_SET_RIGHT:
-    const isRight = action.payload;
-    const messages = [...state.messages].map((message) => {
-      if (message.id === state.selectedMessage) {
-        message.isRight = isRight;
-      }
+    const isRight = `${action.payload}`;
+    const {selectedMessage} = state;
+    const answer = `${isRight[0].toUpperCase()}${isRight.slice(1)}`;
 
-      return message;
-    });
-
-    return {
-      ...state,
-      messages,
-      selectedMessage: null,
-    };
+    state.connection.invoke(`AnswerMessage`, selectedMessage, answer);
+    return state;
   
   case MESSAGE_NEW_MESSAGE:
     return {
