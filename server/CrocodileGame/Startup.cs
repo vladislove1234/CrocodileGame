@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CrocodileGame.Hubs;
+using CrocodileGame.Model.Interfaces;
+using CrocodileGame.Model.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +21,7 @@ namespace CrocodileGame
         {
             services.AddControllers();
             services.AddSignalR();
+            services.AddSingleton<IGameManager, SingleRoomGameManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

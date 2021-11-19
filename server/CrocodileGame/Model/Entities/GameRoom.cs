@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using CrocodileGame.Hubs;
 using CrocodileGame.Model.Enums;
+using CrocodileGame.Model.Interfaces;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
 
 namespace CrocodileGame.Model.Entities
 {
@@ -14,26 +16,44 @@ namespace CrocodileGame.Model.Entities
         public List<Message> Messages { get; private set; }
         public User Presenter { get; private set; }
         public string CurrentWord { get; private set; }
-        public GameRoom(string name)
+        private ILogger<IGameManager> _logger;
+        public GameRoom(string name , ILogger<IGameManager> logger)
         {
+            _logger = logger;
             Name = name;
             Users = new List<User>();
             Presenter = null;
         }
-        public Command ConnectUser(string connectionId, string name)
+        public List<Command> ConnectUser(string connectionId, string name)
         {
+            List<Command> commands = new List<Command>();
             var user = new User(name, connectionId);
             if (Users.Where(x => x.Name == name).FirstOrDefault() != null)
-                return new Command("Connected","wrong_name", user);
-
+            {
+                commands.Add(new Command("Connected", "wrong_name", user));
+                return commands;
+            }
             Users.Add(user);
-
             if (Presenter == null)
             {
                 Presenter = user;
-                return new Command("Connected", "presenter", user);
+                SetNewWord();
+                commands.Add(new Command("Connected", "presenter", user));
+                commands.Add(new Command("Word", CurrentWord, user));
             }
-            return new Command("Connected", "player", user);
+            else
+            {
+                commands.Add(new Command("Connected", "player", user));
+            }
+            int count = Messages.Count - 1, start = 0;
+            if(Messages.Count > 100)
+            {
+                start = Messages.Count - 1 - 100;
+                count = 100;
+            }
+            commands.Add(new Command("Messages", Messages.GetRange(start,count), user));
+            commands.Add(new Command("Players", Users, user));
+            return commands;
         }
         public List<Command> PorcessMessage(string text, string connectionId)
         {
