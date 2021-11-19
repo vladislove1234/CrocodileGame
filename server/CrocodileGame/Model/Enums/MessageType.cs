@@ -3,8 +3,8 @@ namespace CrocodileGame.Model.Enums
 {
     public enum MessageType
     {
-        True,
         False,
+        True,
         UnAnswered
     }
 }

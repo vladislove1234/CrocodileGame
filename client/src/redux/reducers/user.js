@@ -1,4 +1,9 @@
-import {USER_LOGIN, USER_LOGOUT, USER_SET_NAME} from '../types';
+import {
+  USER_LOGIN,
+  USER_LOGOUT,
+  USER_SET_NAME,
+  USER_SET_COLOR,
+} from '../types';
 
 const initialState = {
   name: ``,
@@ -27,8 +32,15 @@ export default (state = initialState, action) => {
     return {
       ...state,
       name: ``,
+      color: undefined,
       type: undefined,
       isAuth: false,
+    };
+
+  case USER_SET_COLOR:
+    return {
+      ...state,
+      color: action.payload,
     };
   }
 

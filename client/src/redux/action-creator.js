@@ -2,12 +2,14 @@ import {
   USER_LOGIN,
   USER_LOGOUT,
   USER_SET_NAME,
+  USER_SET_COLOR,
   MESSAGE_SEND,
   MESSAGE_SELECT,
   MESSAGE_SET_RIGHT,
   MESSAGE_NEW_MESSAGE,
   MESSAGE_INIT_CONNECTION,
   MESSAGE_SET_MESSAGES,
+  MESSAGE_DISCONNECT,
   GAME_TOGGLE_RULES,
   GAME_SET_WORD,
   GAME_TOGGLE_START,
@@ -18,6 +20,11 @@ const userActions = {
   setName: (name) => ({
     type: USER_SET_NAME,
     payload: name,
+  }),
+
+  setColor: (color) => ({
+    type: USER_SET_COLOR,
+    payload: color,
   }),
 
   login: (userType) => ({
@@ -54,8 +61,9 @@ const messageActions = {
       dispatch(gameActions.setWord(word));
     });
 
-    connection.on(`Players`, (players) => {
-      console.log(`Players:`, players);
+    connection.on(`Player`, (player) => {
+      console.log(`Player:`, player);
+      dispatch(userActions.setColor(player.color));
     });
 
     connection.on(`NewMessage`, (message) => {
@@ -94,6 +102,10 @@ const messageActions = {
   setMessages: (messages) => ({
     type: MESSAGE_SET_MESSAGES,
     payload: messages,
+  }),
+
+  disconnectMessages: () => ({
+    type: MESSAGE_DISCONNECT,
   }),
 };
 

@@ -5,6 +5,7 @@ import {
   MESSAGE_INIT_CONNECTION,
   MESSAGE_NEW_MESSAGE,
   MESSAGE_SET_MESSAGES,
+  MESSAGE_DISCONNECT,
 } from '../types';
 
 const initialState = {
@@ -62,6 +63,10 @@ export default (state = initialState, action) => {
       ...state,
       messages: [...state.messages, action.payload],
     };
+
+  case MESSAGE_DISCONNECT:
+    state.connection.invoke(`Disconnect`);
+    return state;
   }
 
   return state;

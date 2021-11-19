@@ -26,6 +26,7 @@ const ChatPage = () => {
       type: `system`,
       text: `${name} покинув(-ла) гру`,
     }));
+    dispatch(ActionCreator.disconnectMessages());
     dispatch(ActionCreator.logout());
   };
 

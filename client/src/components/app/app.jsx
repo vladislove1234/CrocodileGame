@@ -24,6 +24,17 @@ const App = () => {
   const router = useRoutes(isAuth);
 
   useEffect(async () => {
+    let lockResolver;
+    if (navigator && navigator.locks && navigator.locks.request) {
+      const promise = new Promise((res) => {
+        lockResolver = res;
+      });
+
+      navigator.locks.request('unique_lock_name', {mode: 'shared'}, () => {
+        return promise;
+      });
+    }
+
     const connection = new HubConnectionBuilder()
       .configureLogging(LogLevel.Debug)
       .withUrl(`https://localhost:5050/chat`, {
