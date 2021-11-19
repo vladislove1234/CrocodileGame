@@ -32,7 +32,6 @@ namespace CrocodileGame.Hubs
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            _logger.LogWarning(exception.Message);
             var commands = await _gameManager.Disconnect(Context.ConnectionId);
             if (commands != null)
                 await SendCommands(commands);
