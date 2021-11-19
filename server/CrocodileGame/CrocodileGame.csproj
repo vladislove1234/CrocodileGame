@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Controllers\" />
+    <None Remove="Model\" />
+    <None Remove="Model\Services\" />
+    <None Remove="Model\Interfaces\" />
+    <None Remove="Hubs\" />
+    <None Remove="Model\Entities\" />
+    <None Remove="Model\Enums\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Model\" />
+    <Folder Include="Model\Services\" />
+    <Folder Include="Model\Interfaces\" />
+    <Folder Include="Hubs\" />
+    <Folder Include="Model\Entities\" />
+    <Folder Include="Model\Enums\" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,46 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "npx webpack --mode production",
+    "start": "npx webpack serve --mode development --open",
+    "eslint": "eslint --ext .tsx --ext .ts --ext .jsx --ext .js src/"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
+    "autoprefixer": "^10.4.0",
+    "babel-loader": "^8.2.3",
+    "copy-webpack-plugin": "^9.1.0",
+    "css-loader": "^6.5.1",
+    "css-mqpacker": "^7.0.0",
+    "csscomb-loader": "^0.0.2",
+    "eslint": "^8.2.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.27.0",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.4.4",
+    "postcss-loader": "^6.2.0",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.3.0",
+    "webpack-build-notifier": "^2.3.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0"
+  },
+  "dependencies": {
+    "@microsoft/signalr": "^6.0.0",
+    "normalize.css": "^8.0.1",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.0.2",
+    "redux": "^4.1.2",
+    "redux-thunk": "^2.4.0"
+  }
+}

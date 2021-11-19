@@ -1,0 +1,25 @@
+env:
+  browser: true
+  es2021: true
+
+extends:
+  - 'plugin:react/recommended'
+  - google
+
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: 2020
+  sourceType: module
+
+plugins:
+  - react
+
+root: true
+
+rules: {
+  "indent": [2, 2],
+  "react/prop-types": "off",
+  "react/require-default-props": "off"
+}
+

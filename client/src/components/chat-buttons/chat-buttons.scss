@@ -1,0 +1,34 @@
+.chat-button__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.chat-button {
+  margin: 0 30px;
+  width: 146px;
+  height: 45px;
+  box-shadow: 2px 4px 17px -3px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #FFF;
+  border: 0;
+  opacity: 1;
+  transition: all .3s;
+
+  &--yes {
+    background: #7AFF80;
+  }
+
+  &--no {
+    background: #FF7272;
+  }
+
+  &:disabled {
+    opacity: .8;
+    cursor: not-allowed;
+  }
+}
