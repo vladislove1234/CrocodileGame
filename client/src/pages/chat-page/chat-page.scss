@@ -1,7 +1,7 @@
 .chat-page {
   min-height: 100vh;
   background: #E5E5E5;
-  padding: 60px 22.5% 0;
+  padding: 60px 15% 0;
 }
 
 .chat__wrapper {
@@ -34,4 +34,10 @@
   width: 30px;
   height: 30px;
   font-size: 24px;
+}
+
+@media screen and (min-width: 1024px) {
+  .chat-page {
+    padding: 60px 22.5% 0;
+  }
 }

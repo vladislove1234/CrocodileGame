@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './info-line.scss';
 import UserAvatar from '../user-avatar/user-avatar';
+
+
+import './info-line.scss';
 
 const userTypeToRole = {
   'presenter': `Крокодил`,

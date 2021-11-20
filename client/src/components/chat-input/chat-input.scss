@@ -5,7 +5,8 @@
   margin: 0 auto;
   margin-top: 32px;
   padding: 0 17px;
-  padding-left: 100px;
+  padding-left: 5%;
+  display: flex;
 }
 
 .chat__input {
@@ -22,4 +23,10 @@
   color: #0B5ED7;
   border: 0;
   background: transparent;
+}
+
+@media screen and (min-width: 1024px) {
+  .chat__input-form {
+    padding-left: 100px;
+  }
 }

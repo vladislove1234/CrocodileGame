@@ -3,6 +3,8 @@ import {
   GAME_TOGGLE_RULES,
   GAME_TOGGLE_START,
   GAME_SET_JUST_LOGGED,
+  GAME_SET_WINNER,
+  GAME_CLEAR_WINNER,
 } from '../types';
 
 const initialState = {
@@ -10,6 +12,11 @@ const initialState = {
   showStart: false,
   justLogged: false,
   word: null,
+  win: {
+    show: false,
+    winner: ``,
+    word: ``,
+  },
 };
 
 export default (state = initialState, action) => {
@@ -37,7 +44,31 @@ export default (state = initialState, action) => {
       ...state,
       word: action.payload,
     };
-  }
+
+  case GAME_SET_WINNER:
+    const winner = action.payload;
+
+    return {
+      ...state,
+      win: {
+        ...state.win,
+        show: true,
+        winner: winner.name,
+        word: winner.word,
+      },
+    };
+
+  case GAME_CLEAR_WINNER:
+    return {
+      ...state,
+      win: {
+        ...state.win,
+        show: false,
+        winner: ``,
+        word: ``,
+      },
+    };
+  };
 
   return state;
 };

@@ -16,7 +16,7 @@ const ChatInput = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    
+
     dispatch(ActionCreator.sendMessage(text));
     setText(``);
   };
