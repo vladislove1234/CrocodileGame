@@ -17,6 +17,8 @@ import {
   GAME_SET_WORD,
   GAME_TOGGLE_START,
   GAME_SET_JUST_LOGGED,
+  GAME_CLEAR_WINNER,
+  GAME_SET_WINNER,
 } from './types';
 
 const userActions = {
@@ -116,6 +118,11 @@ const messageActions = {
       dispatch(messageActions.updateMessage(message));
     });
 
+    connection.on(`Win`, (win) => {
+      console.log(`Win`, win);
+      dispatch(gameActions.setWinner(win));
+    });
+
     await connection.start();
 
     dispatch({
@@ -181,6 +188,15 @@ const gameActions = {
   setWord: (word) => ({
     type: GAME_SET_WORD,
     payload: word,
+  }),
+
+  setWinner: (winner) => ({
+    type: GAME_SET_WINNER,
+    payload: winner,
+  }),
+
+  clearWinner: () => ({
+    type: GAME_CLEAR_WINNER,
   }),
 };
 
