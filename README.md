@@ -14,6 +14,9 @@ To run an application, you need to open terminal in project folder and run these
 ```sh
 cd client
 npm run app
+
+cd server/CrocodileGame
+dotnet run --project CrocodileGame.csproj
 ```
 After these commands:
 - Back-End server will be started at port 5050;
