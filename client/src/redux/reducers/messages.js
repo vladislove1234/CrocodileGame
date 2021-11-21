@@ -3,6 +3,11 @@ import {
   MESSAGE_SEND,
   MESSAGE_SET_RIGHT,
   MESSAGE_INIT_CONNECTION,
+  MESSAGE_NEW_MESSAGE,
+  MESSAGE_SET_MESSAGES,
+  MESSAGE_DISCONNECT,
+  MESSAGE_ADD_SYSTEM_MESSAGE,
+  MESSAGE_UPDATE_MESSAGE,
 } from '../types';
 
 const initialState = {
@@ -10,20 +15,6 @@ const initialState = {
   connection: null,
   messages: [],
 };
-
-// {
-//   id: `1`,
-//   type: `system`,
-//   isRight: undefined,
-//   text: `Віталій Кличко покинув(-ла) гру`,
-// }, {
-//   id: `2`,
-//   user: `Tester`,
-//   date: new Date(),
-//   isRight: undefined,
-//   text: `Test Message`,
-//   color: `#fa8`,
-// }
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -33,21 +24,17 @@ export default (state = initialState, action) => {
       connection: action.payload,
     };
 
-
-  case MESSAGE_SEND:
-    const {user, text, type, color} = action.payload;
-
+  case MESSAGE_SET_MESSAGES:
     return {
       ...state,
-      messages: [
-        ...state.messages,
-        {
-          user, text, type, color,
-          date: new Date(),
-          id: +(new Date()) + text,
-        },
-      ],
+      messages: action.payload,
     };
+
+  case MESSAGE_SEND:
+    const text = action.payload;
+    state.connection.invoke(`SendMessage`, text);
+
+    return state;
 
   case MESSAGE_SELECT:
     const id = action.payload;
@@ -58,26 +45,46 @@ export default (state = initialState, action) => {
     };
 
   case MESSAGE_SET_RIGHT:
-    const isRight = action.payload;
-    const messages = [...state.messages].map((message) => {
-      if (message.id === state.selectedMessage) {
-        message.isRight = isRight;
-      }
+    const isRight = `${action.payload}`;
+    const {selectedMessage} = state;
+    const answer = `${isRight[0].toUpperCase()}${isRight.slice(1)}`;
 
-      return message;
-    });
+    state.connection.invoke(`AnswerMessage`, selectedMessage, answer);
+    return state;
 
-    return {
-      ...state,
-      messages,
-      selectedMessage: null,
-    };
-  
   case MESSAGE_NEW_MESSAGE:
     return {
       ...state,
       messages: [...state.messages, action.payload],
     };
+
+  case MESSAGE_DISCONNECT:
+    state.connection.invoke(`Disconnect`);
+    return state;
+
+  case MESSAGE_ADD_SYSTEM_MESSAGE:
+    return {
+      ...state,
+      messages: [...state.messages, {
+        id: action.payload,
+        text: action.payload,
+        messageType: `system`,
+      }],
+    };
+
+  case MESSAGE_UPDATE_MESSAGE: {
+    const updatedMessage = action.payload;
+    const {id} = updatedMessage;
+
+    const newMessages = state.messages.map((message) => {
+      return message.id === id ? updatedMessage : message;
+    });
+
+    return {
+      ...state,
+      messages: newMessages,
+    };
+  }
   }
 
   return state;

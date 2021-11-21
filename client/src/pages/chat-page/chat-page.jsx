@@ -13,7 +13,11 @@ import './chat-page.scss';
 import AlertScreen from '../../components/alert-screen/alert-screen';
 
 const ChatPage = () => {
-  const isScaled = useSelector(({game}) => game.showRules || game.showStart);
+  const isScaled = useSelector(({game}) => {
+    return game.showRules || game.showStart || game.win.show;
+  });
+  const showStart = useSelector(({game}) => game.showStart);
+  const win = useSelector(({game}) => game.win);
 
   const [name, type, color] = useSelector(
     ({user}) => [user.name, user.type, user.color],
@@ -22,10 +26,7 @@ const ChatPage = () => {
 
   const dispatch = useDispatch();
   const logout = () => {
-    dispatch(ActionCreator.sendMessage({
-      type: `system`,
-      text: `${name} покинув(-ла) гру`,
-    }));
+    dispatch(ActionCreator.disconnectMessages());
     dispatch(ActionCreator.logout());
   };
 
@@ -37,7 +38,28 @@ const ChatPage = () => {
   return (
     <section className="chat-page">
       <Rules type={type} />
-      <AlertScreen title="Гру розпочато!" />
+
+      {/* Star Game Alert */}
+      <AlertScreen
+        title="Гру розпочато!"
+        show={showStart}
+        onClose={() => {
+          dispatch(ActionCreator.setJustLogged(false));
+          dispatch(ActionCreator.toggleStart());
+        }}
+      />
+
+      {/* Win game alert */}
+      <AlertScreen
+        text={`Гравець ${win.winner} відгадав слово “${win.word.toUpperCase()}”,
+         внаслідок чого стає крокодилом`}
+        title="Гру завершено!"
+        show={win.show}
+        time={4000}
+        onClose={() => {
+          dispatch(ActionCreator.clearWinner());
+        }}
+      />
 
       <div className={`chat__wrapper ${isScaled && `chat__wrapper--scaled`}`}>
         <section className="chat">
@@ -61,8 +83,8 @@ const ChatPage = () => {
         </section>
 
         {
-          type === `user` ?
-            <ChatInput name={name} color={color} /> :
+          type === `player` ?
+            <ChatInput /> :
             <ChatButtons />
         }
       </div>

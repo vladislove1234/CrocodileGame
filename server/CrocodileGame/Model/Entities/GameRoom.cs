@@ -24,6 +24,7 @@ namespace CrocodileGame.Model.Entities
             Name = name;
             Users = new List<User>();
             Presenter = null;
+            Messages = new List<Message>();
         }
         public List<Command> ConnectUser(string connectionId, string name)
         {
@@ -46,8 +47,10 @@ namespace CrocodileGame.Model.Entities
             {
                 commands.Add(new Command("Connected", "player", user));
             }
+
             commands.Add(new Command("Messages", Messages, user));
             commands.Add(new Command("Player", user, user));
+
             commands.Add(new Command("ConnectedPlayer", user.Name , Users.ToArray()));
             return commands;
         }
@@ -67,7 +70,7 @@ namespace CrocodileGame.Model.Entities
             {
                 commands.Add(new Command("Win", new Win(sender.Name, CurrentWord), Users.ToArray()));
                 SetNewWord();
-                var presenter = sender;
+                Presenter = sender;
                 commands.Add(new Command("NewPresenter", Presenter.Name, Users.ToArray()));
                 commands.Add(new Command("NewWord", CurrentWord, Presenter));
             }
@@ -87,7 +90,9 @@ namespace CrocodileGame.Model.Entities
                 var presenter = Users[random.Next(0, Users.Count)];
                 if (presenter == Presenter)
                     Presenter = Users[0];
-                Presenter = presenter;
+                else
+                    Presenter = presenter;
+
             }
             else
                 Presenter = null;
@@ -105,8 +110,9 @@ namespace CrocodileGame.Model.Entities
             {
                 SetRandomPresenter();
                 SetNewWord();
+
                 commands.Add(new Command("NewPresenter", Presenter.Name, Users.ToArray()));
-                commands.Add(new Command("NewWord", CurrentWord, user));
+                commands.Add(new Command("NewWord", CurrentWord, Presenter));
             }
             return commands;
         }

@@ -2,9 +2,10 @@ const path = require(`path`);
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`);
 const CopyWebpackPlugin = require(`copy-webpack-plugin`);
 const HtmlWebpackPlugin = require(`html-webpack-plugin`);
+const {CleanWebpackPlugin} = require(`clean-webpack-plugin`);
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 
-module.exports = {
+const config = {
   entry: `./src/index.jsx`,
   output: {
     path: path.join(__dirname, `dist`),
@@ -13,10 +14,8 @@ module.exports = {
   },
 
   devServer: {
-    // contentBase: path.join(__dirname, `dist`),
     historyApiFallback: true,
     compress: false,
-    // overlay: true,
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
@@ -26,10 +25,6 @@ module.exports = {
       target: `localhost:5050/`,
       changeOrigin: true,
       ws: true,
-      // '/socket.io': {
-      //   target: `http://localhost:5000`,
-      //   ws: true,
-      // },
     },
   },
 
@@ -86,7 +81,6 @@ module.exports = {
     }],
   },
 
-  devtool: `eval-source-map`,
   resolve: {
     extensions: [`.js`, `.jsx`],
   },
@@ -117,4 +111,15 @@ module.exports = {
       successSound: false,
     }),
   ],
+};
+
+module.exports = (_env, options) => {
+  const development = options.mode === `development`;
+
+  config.devtool = development ? `eval-source-map` : false;
+  if (!development) {
+    config.plugins.push(new CleanWebpackPlugin());
+  }
+
+  return config;
 };

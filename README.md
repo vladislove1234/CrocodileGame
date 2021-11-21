@@ -1,25 +1,25 @@
 # CrocodileGame
-Welcome to the main repository to of _CrocodileGame Project_.
+Welcome to the main repository of _CrocodileGame Project_.
+
+## About
+This is our version of a famous game "Crocodile". You need two players to play this game. In case there isn't second player, you can open this game in the other tab or browser.
 
 ## How to run
 ### _Installation_
 This project is build with C# and [ASP.NET](https://dotnet.microsoft.com/download), so you need to install both these things.
-
 Also, this project uses [Node.js and npm](https://nodejs.org/en/). You have to install this too.
-After that, you ought to open your terminal in project folder and write these commands in console. After this, all dependencies will be installed.
-```sh
-cd client
-npm install
-```
+
 ### _Start_
-To start the server, you need to open command line in project directory. Then write
-```sh
-dotnet run --project ./server/CrocodileGame/CrocodileGame.csproj
-```
-The server will be started in port 5050 (make sure there's nothing working on this port).
-To run a client side, you need to write this command in other console
+To run an application, you need to open terminal in project folder and run these two commands:
 ```sh
 cd client
-npm start
+npm run app
 ```
-Your browser will be opened in localhost:8080.
+After these commands:
+- Back-End server will be started at port 5050;
+- All Front-End dependencies will be installed;
+- Application will be built;
+- Front-End will be started at port 8080.
+
+Also, you will need to open http://localhost:8080/ in your browser.
+

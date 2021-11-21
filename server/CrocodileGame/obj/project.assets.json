@@ -8,24 +8,26 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "/Users/vlad/.nuget/packages/": {}
+    "C:\\Users\\Victor\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/vlad/Projects/CrocodileGame/server/CrocodileGame/CrocodileGame.csproj",
+      "projectUniqueName": "D:\\git\\CrocodileGame\\server\\CrocodileGame\\CrocodileGame.csproj",
       "projectName": "CrocodileGame",
-      "projectPath": "/Users/vlad/Projects/CrocodileGame/server/CrocodileGame/CrocodileGame.csproj",
-      "packagesPath": "/Users/vlad/.nuget/packages/",
-      "outputPath": "/Users/vlad/Projects/CrocodileGame/server/CrocodileGame/obj/",
+      "projectPath": "D:\\git\\CrocodileGame\\server\\CrocodileGame\\CrocodileGame.csproj",
+      "packagesPath": "C:\\Users\\Victor\\.nuget\\packages\\",
+      "outputPath": "D:\\git\\CrocodileGame\\server\\CrocodileGame\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/vlad/.config/NuGet/NuGet.Config"
+        "C:\\Users\\Victor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -61,7 +63,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.402/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

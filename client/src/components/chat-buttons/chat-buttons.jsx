@@ -5,7 +5,9 @@ import {ActionCreator} from '../../redux/action-creator';
 import './chat-buttons.scss';
 
 const ChatButtons = () => {
-  const isSelected = useSelector(({messages}) => !!messages.selectedMessage);
+  const isDisabled = useSelector(
+    ({messages}) => messages.selectedMessage === null,
+  );
 
   const dispatch = useDispatch();
 
@@ -17,13 +19,13 @@ const ChatButtons = () => {
   return (
     <section className="chat-button__wrapper">
       <button
-        disabled={!isSelected}
+        disabled={isDisabled}
         className="chat-button chat-button--yes"
         onClick={((event) => onButtonClick(event, true))}
       >Так</button>
 
       <button
-        disabled={!isSelected}
+        disabled={isDisabled}
         className="chat-button chat-button--no"
         onClick={((event) => onButtonClick(event, false))}
       >Ні</button>

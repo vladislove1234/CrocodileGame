@@ -26,14 +26,17 @@ const ChatList = () => {
       {
         !messages.length ?
           <Message
-            id="empty"
-            type="system"
-            text="Немає нових повідомлень"
+            id="none"
+            messageType="system"
+            text="Нам не вдалося знайти нових повідомлень"
           /> :
           messages.map((message, i) => {
+            const senderName = message?.sender?.name;
+            const lastFromUser = senderName !== messages?.[i + 1]?.sender?.name;
+
             return <Message
-              lastFromUser={message?.user !== messages?.[i + 1]?.user}
-              fromMe={message?.user === name}
+              fromMe={senderName === name}
+              lastFromUser={lastFromUser}
               key={message.id}
               userType={type}
               {...message}

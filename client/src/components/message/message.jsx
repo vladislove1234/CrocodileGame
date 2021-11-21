@@ -8,16 +8,27 @@ import UserAvatar from '../user-avatar/user-avatar';
 
 import './message.scss';
 
+// id: PropTypes.string.isRequired,
+// text: PropTypes.string.isRequired,
+// type: PropTypes.number.isRequired,
+// lastFromUser: PropTypes.bool,
+// fromMe: PropTypes.bool,
+// sentAt: PropTypes.string,
+// sender: PropTypes.shape({
+//   color: PropTypes.string.isRequired,
+//   name: PropTypes.string.isRequired,
+// }),
 
 const Message = (props) => {
   const {
-    id, text, user, date, isRight, color, userType,
-    type = `user`,
+    id, text, sentAt, sender, userType,
+    type = 2,
+    messageType = `player`,
     fromMe = false,
     lastFromUser = false,
   } = props;
 
-  if (type === `system`) {
+  if (messageType === `system`) {
     return (
       <li className="message message__system">{text}</li>
     );
@@ -31,7 +42,7 @@ const Message = (props) => {
   const onMessageClick = (event) => {
     event.preventDefault();
 
-    if (userType === `leader`) {
+    if (userType === `presenter`) {
       dispatch(ActionCreator.selectMessage(id));
     }
   };
@@ -39,30 +50,31 @@ const Message = (props) => {
   const className = `
     message 
     message__user 
-    ${isRight && `message__user--true`}
+    ${type === 1 && `message__user--true`}
+    ${type === 0 && `message__user--false`}
     ${isSelected && `message__user--selected`}
     ${!lastFromUser && `message__user--not-last`}
-    ${isRight === false && `message__user--false`}
-    ${userType === `leader` && `message__user--hoverable`}
+    ${userType === `presenter` && `message__user--hoverable`}
   `;
+
+  const date = new Date(sentAt)
+    .toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
 
   if (fromMe) {
     return (
       <li
         onClick={onMessageClick}
-        tabIndex={userType === `leader` ? 1 : -1}
+        tabIndex={userType === `presenter` ? 1 : -1}
         className={`${className} message__user--right`}
       >
         <div className="message__text">
           {text}
-          <span className="message__date">
-            {date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}
-          </span>
+          <span className="message__date">{date}</span>
         </div>
 
         <div className="message__profile">
-          <UserAvatar width={52} color={color} />
-          <span className="message__name">{user}</span>
+          <UserAvatar width={52} color={sender.color} />
+          <span className="message__name">{sender.name}</span>
         </div>
       </li>
     );
@@ -71,35 +83,35 @@ const Message = (props) => {
   return (
     <li
       onClick={onMessageClick}
-      tabIndex={userType === `leader` ? 1 : -1}
+      tabIndex={userType === `presenter` ? 1 : -1}
       className={`${className} message__user--left`}
     >
       <div className="message__profile">
-        <UserAvatar width={52} color={color} />
-        <span className="message__name">{user}</span>
+        <UserAvatar width={52} color={sender.color} />
+        <span className="message__name">{sender.name}</span>
       </div>
 
       <div className="message__text">
         {text}
-        <span className="message__date">
-          {date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}
-        </span>
+        <span className="message__date">{date}</span>
       </div>
     </li>
   );
 };
 
 Message.propTypes = {
-  user: PropTypes.string,
-  fromMe: PropTypes.bool,
-  color: PropTypes.string,
-  lastFromUser: PropTypes.bool,
-  id: PropTypes.string.isRequired,
-  date: PropTypes.instanceOf(Date),
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   text: PropTypes.string.isRequired,
-  type: PropTypes.oneOf([`user`, `system`]),
-  userType: PropTypes.oneOf([`user`, `leader`]),
-  isRight: PropTypes.oneOf([false, true, undefined]),
+  type: PropTypes.number,
+  lastFromUser: PropTypes.bool,
+  fromMe: PropTypes.bool,
+  sentAt: PropTypes.string,
+  userType: PropTypes.oneOf([`presenter`, `player`]),
+  messageType: PropTypes.oneOf([`system`, `player`]),
+  sender: PropTypes.shape({
+    color: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }),
 };
 
 export default React.memo(Message);
