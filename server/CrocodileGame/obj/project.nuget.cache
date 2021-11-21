@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "N+JbNE5zM+266p4lcOe9wHAODqrzu1Du0Wk+y0QYWrutoR7I7GzCY7XT/CAOHGRYZm5+29LSj/Zs5GHFN6ZUEQ==",
+  "dgSpecHash": "l+4HPtMC7uj1vHUiB13y081faYbOdLMGzzr3dhLuut9+h4GcStt19Ifb6gc+3Ma+XD0E1Qx3EMSMckDhcSLxjw==",
   "success": true,
-  "projectFilePath": "D:\\git\\CrocodileGame\\server\\CrocodileGame\\CrocodileGame.csproj",
+  "projectFilePath": "/Users/vlad/Projects/CrocodileGame/server/CrocodileGame/CrocodileGame.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

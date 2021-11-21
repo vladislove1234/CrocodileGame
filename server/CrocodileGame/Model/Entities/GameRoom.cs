@@ -11,7 +11,18 @@ namespace CrocodileGame.Model.Entities
 {
     public class GameRoom
     {
-
+        readonly string[] words = new string[]
+        {
+            "Машина",
+            "Глобус",
+            "Карбюратор",
+            "Інтеркулер",
+            "Басист",
+            "Рюкзак",
+            "Мова",
+            "Слово",
+            "Миша"
+        };
         public string Name { get; private set; }
         public List<User> Users { get; private set; }
         public List<Message> Messages { get; private set; }
@@ -79,7 +90,21 @@ namespace CrocodileGame.Model.Entities
 
         private void SetNewWord()
         {
-            CurrentWord = "test" + new Random().Next(0,100);
+            if(words.Length > 1)
+            {
+                var rand = new Random();
+                int i = rand.Next(0, words.Length);
+                if(words[i] == CurrentWord)
+                {
+                    i = i + 1 == words.Length ? i - 1 : i + 1;
+                }
+                CurrentWord = words[i];
+            }
+            else
+            {
+                _logger.LogError("Set words array!");
+                CurrentWord = "Крокодил";
+            }
         }
 
         private void SetRandomPresenter()
