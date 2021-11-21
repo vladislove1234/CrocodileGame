@@ -11,6 +11,7 @@ namespace CrocodileGame.Model.Entities
 {
     public class GameRoom
     {
+
         public string Name { get; private set; }
         public List<User> Users { get; private set; }
         public List<Message> Messages { get; private set; }
