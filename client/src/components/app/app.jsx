@@ -26,7 +26,7 @@ const App = () => {
   useEffect(async () => {
     const connection = new HubConnectionBuilder()
       .configureLogging(LogLevel.Debug)
-      .withUrl(`https://localhost:5050/chat`, {
+      .withUrl(`https://192.168.1.2:5050/chat`, {
         skipNegotiation: true,
         transport: HttpTransportType.WebSockets,
       })

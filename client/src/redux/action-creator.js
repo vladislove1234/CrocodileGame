@@ -50,8 +50,6 @@ const userActions = {
 const messageActions = {
   initMessages: (connection) => async (dispatch) => {
     connection.on(`Connected`, (userType) => {
-      console.log(`userType:`, userType);
-
       if (userType === `wrong_name`) {
         return console.error(`wrong_name`);
       }
@@ -62,35 +60,28 @@ const messageActions = {
     });
 
     connection.on(`Messages`, (messages) => {
-      console.log(`Messages:`, messages);
       dispatch(messageActions.setMessages(messages));
     });
 
     connection.on(`Word`, (word) => {
-      console.log(`Word:`, word);
       dispatch(gameActions.setWord(word));
     });
 
     connection.on(`Player`, (player) => {
-      console.log(`Player:`, player);
       dispatch(userActions.setColor(player.color));
     });
 
     connection.on(`NewMessage`, (message) => {
-      console.log(`NewMessage`, message);
       dispatch(messageActions.newMessage(message));
     });
 
     connection.on(`ConnectedPlayer`, (playerName) => {
-      console.log(`ConnectedPlayer`, playerName);
       dispatch(
         messageActions.addSystemMessage(`${playerName} приєднався(-лася)`),
       );
     });
 
     connection.on(`NewPresenter`, (presenterName) => {
-      console.log(`NewPresenter`, presenterName);
-
       dispatch(userActions.newPresenter(presenterName));
       dispatch(
         messageActions.addSystemMessage(
@@ -100,7 +91,6 @@ const messageActions = {
     });
 
     connection.on(`Disconnected`, (person) => {
-      console.log(`Disconnected`, person);
       dispatch(
         messageActions.addSystemMessage(
           `${person} покинув(-ла) гру`,
@@ -109,17 +99,14 @@ const messageActions = {
     });
 
     connection.on(`NewWord`, (word) => {
-      console.log(`NewWord`, word);
       dispatch(gameActions.setWord(word));
     });
 
     connection.on(`UpdateMessage`, (message) => {
-      console.log(`UpdateMessage`, message);
       dispatch(messageActions.updateMessage(message));
     });
 
     connection.on(`Win`, (win) => {
-      console.log(`Win`, win);
       dispatch(gameActions.setWinner(win));
     });
 
